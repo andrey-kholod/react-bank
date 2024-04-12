@@ -5,10 +5,8 @@ import {MTabComponent} from "../components/TabComponent"
 import { MdOutlineKeyboardArrowRight } from "react-icons/md"
 import ExpensesPerDay from "../components/ExpensesPerDay"
 import { expenses } from "../data/expenses"
-import { useState } from "react"
 
 const FinancialAnalyticsPage = () => {
-    const [activeTab, setActiveTab] = useState<number>(0)
 
     const animationVariants = {
         hidden: {

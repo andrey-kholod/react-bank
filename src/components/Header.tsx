@@ -4,10 +4,9 @@ import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 
 interface Props {
     name?: string;
-    profilePhoto?: string
 }
 
-const Header: FC<Props> = ({name = 'ИП ВАШЕ ИМЯ', profilePhoto}) => {
+const Header: FC<Props> = ({name = 'ИП ВАШЕ ИМЯ'}) => {
     return (
         <header className="bg-gray-900 w-full">
             <div className="container mx-auto px-4 max-w-4xl text-gray-400 uppercase py-2.5">
