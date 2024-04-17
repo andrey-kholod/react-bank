@@ -50,7 +50,6 @@ export const ExpensesProvider: FC<Props> = ({ children }) => {
     const incoming = (bool: boolean) => {
         if (!bool) {
             setStateExpenses(initialExpenses)
-            console.log('here')
         } else {
             const filteredExpenses: MainContext = {}
             Object.keys(initialExpenses).forEach(date => {

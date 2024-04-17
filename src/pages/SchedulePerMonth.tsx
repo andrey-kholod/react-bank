@@ -7,7 +7,6 @@ import { motion } from "framer-motion"
 
 const SchedulePerMonth = () => {
     const [month, setMonth] = useState(new Date().getMonth() + 1)
-    console.log(month)
     const [data, setData] = useState<TExpense[]>([])
 
 

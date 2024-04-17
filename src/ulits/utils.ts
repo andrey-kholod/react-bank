@@ -1,7 +1,6 @@
 import { getMainContext } from "../context/expensesContext"
 
 export const currentSpendings = (currentMonth: number = new Date().getMonth() + 1): [number, number] => {
-    // const currentMonth = new Date().getMonth() + 1
     const [context] = getMainContext()
     let totalAmountOfReplenishment = 0
     let totalAmountSpent = 0
