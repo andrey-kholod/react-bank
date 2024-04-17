@@ -1,12 +1,21 @@
 import { LuSettings2 } from "react-icons/lu"
 import Box from "../components/Box"
 import Container from "../components/Container"
-import {MTabComponent} from "../components/TabComponent"
+import { MTabComponent } from "../components/TabComponent"
 import { MdOutlineKeyboardArrowRight } from "react-icons/md"
 import ExpensesPerDay from "../components/ExpensesPerDay"
-import { expenses } from "../data/expenses"
+import { getMainContext } from "../context/expensesContext"
+import { currentSpendings } from "../ulits/utils"
+import { useState } from "react"
+import { Link } from "react-router-dom"
 
 const FinancialAnalyticsPage = () => {
+    const [activeTab, setActiveTab] = useState(0)
+
+    const [earned, spent] = currentSpendings()
+    const [mainContextExpenses] = getMainContext()
+
+    const allMoney = Math.abs(spent) + earned
 
     const animationVariants = {
         hidden: {
@@ -16,7 +25,7 @@ const FinancialAnalyticsPage = () => {
         visible: (custom: any) => ({
             x: 0,
             opacity: 1,
-            transition: {delay: custom * 0.15}
+            transition: { delay: custom * 0.15 }
         })
     }
 
@@ -24,44 +33,43 @@ const FinancialAnalyticsPage = () => {
         <Container>
             <div className="flex justify-between items-center">
                 <h2 className="text-gray-800 font-bold text-xl mt-6 mb-5">Финансовая аналитика</h2>
-                <MdOutlineKeyboardArrowRight size={30} style={{marginTop: '3px', color: 'rgb(176 184 199)', cursor: 'pointer'}}/>
-
+                <Link to="/schedule"><MdOutlineKeyboardArrowRight size={30} style={{ marginTop: '3px', color: 'rgb(176 184 199)', cursor: 'pointer' }} /></Link>
             </div>
             <Box>
-                <div className="flex flex-col gap-3">
+                <Link to="/schedule" className="flex flex-col gap-3">
                     <p className="text-gray-800 font-bold text-lg">Апрель</p>
                     <div className="flex justify-between font-medium text-gray-500 text-sm">
                         <p>Поступления</p>
                         <p>Списания</p>
                     </div>
                     <div className="w-full h-1.5 rounded overflow-hidden flex">
-                        <div className="h-1.5 w-4/6 bg-green-500"></div>
-                        <div className="h-1.5 w-2/6 bg-red-500"></div>
+                        <div className="h-1.5 bg-green-500 transition-all duration-500" style={{width: `${(earned / allMoney * 100).toFixed(1)}%`}}></div>
+                        <div className="h-1.5 bg-red-500 transition-all duration-500" style={{width: `${(Math.abs(spent) / allMoney * 100).toFixed(1)}%`}}></div>
                     </div>
                     <div className="flex justify-between font-bold">
-                        <p>41 405 ₽</p>
-                        <p>25 405, 81 ₽</p>
+                        <p>{earned.toLocaleString('ru-RU')} ₽</p>
+                        <p>{Math.abs(spent).toLocaleString('ru-RU')} ₽</p>
                     </div>
-                </div>
+                </Link>
             </Box>
             <h2 className="text-gray-800 font-bold text-xl mt-14 mb-6">Исполненные платежи</h2>
-            <Box type="input" placeholder="Контрагент или назначение">
-                {/* <p className="text-gray-500"></p> */}
+            <Box type="input" placeholder="Контрагент или назначение" index={activeTab}>
             </Box>
             <div className="btn-box mx-1.5 mt-5 mb-9 flex items-center gap-2">
-                <MTabComponent custom={1} variants={animationVariants} initial="hidden" animate="visible">
-                    <LuSettings2 size={20}/>
+                <MTabComponent custom={1} variants={animationVariants} initial="hidden" animate="visible" appointment="none" index={1} changeTheIndex={setActiveTab} activeTab={activeTab}>
+                    <LuSettings2 size={20} />
                 </MTabComponent>
-                <MTabComponent custom={2} variants={animationVariants} initial="hidden" animate="visible">Входящие</MTabComponent>
-                <MTabComponent custom={3} variants={animationVariants} initial="hidden" animate="visible">Исходящие</MTabComponent>
+                <MTabComponent custom={2} variants={animationVariants} initial="hidden" animate="visible" appointment="incoming" index={2} changeTheIndex={setActiveTab} activeTab={activeTab}>Входящие</MTabComponent>
+                <MTabComponent custom={3} variants={animationVariants} initial="hidden" animate="visible" appointment="outgoing" index={3} changeTheIndex={setActiveTab} activeTab={activeTab}>Исходящие</MTabComponent>
             </div>
 
             <div className="expenses-block mx-1.5">
-                <ExpensesPerDay date="8 апреля, пн" expenses={expenses}/>
-                <ExpensesPerDay date="8 апреля, пн" expenses={expenses}/>
+                {Object.keys(mainContextExpenses).map((e, i) => (
+                    <ExpensesPerDay date={e} expenses={mainContextExpenses[e]} key={i} />
+                ))}
             </div>
 
-            
+
         </Container>
     )
 }

@@ -6,7 +6,6 @@
     "moduleResolution": "bundler",
     "allowSyntheticDefaultImports": true,
     "strict": true,
-    "baseUrl": "/react-bank/"
   },
   "include": ["vite.config.ts"]
 }
