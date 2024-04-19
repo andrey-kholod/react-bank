@@ -1,19 +1,25 @@
 import { Route, Routes } from "react-router"
-import Header from "./components/Header"
-import Menu from "./components/Menu"
 import FinancialAnalyticsPage from "./pages/FinancialAnalyticsPage"
 import SchedulePerMonth from "./pages/SchedulePerMonth"
+import LockScreen from "./pages/LockScreen"
+import HomePage from "./pages/HomePage"
+import { useState } from "react"
 
 function App() {
+  const [authorized, setAuthorized] = useState(false) 
+
+  const setAuthorizedToTrue = () => {
+    setAuthorized(true)
+  }
 
   return (
     <>
-      <Header />
       <Routes>
-        <Route path="/" element={<FinancialAnalyticsPage />} />
-        <Route path="/schedule" element={<SchedulePerMonth />} />
+        <Route path="/" element={<HomePage authorized={authorized}/>} />
+        <Route path="/payments" element={<FinancialAnalyticsPage authorized={authorized}/>} />
+        <Route path="/schedule" element={<SchedulePerMonth authorized={authorized}/>} />
+        <Route path="/lockscreen" element={<LockScreen setAuthorizedToTrue={setAuthorizedToTrue}/>} />
       </Routes>
-      <Menu />
     </>
   )
 }

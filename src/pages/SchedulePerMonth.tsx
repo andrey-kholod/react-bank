@@ -1,11 +1,18 @@
 import { IoIosInformationCircle } from "react-icons/io"
 import { TExpense, makeInitialValue } from "../context/expensesContext"
-import { useEffect, useState } from "react"
+import { FC, useEffect, useState } from "react"
 import { RiArrowLeftSLine, RiArrowRightSLine } from "react-icons/ri"
 import Schedule from "../components/Schedule"
 import { motion } from "framer-motion"
+import Header from "../components/Header"
+import Menu from "../components/Menu"
+import { Navigate } from "react-router"
 
-const SchedulePerMonth = () => {
+interface Props {
+    authorized: boolean
+}
+
+const SchedulePerMonth: FC<Props> = ({authorized}) => {
     const [month, setMonth] = useState(new Date().getMonth() + 1)
     const [data, setData] = useState<TExpense[]>([])
 
@@ -80,8 +87,12 @@ const SchedulePerMonth = () => {
         12: "Декабрь"
     }
 
+    if (!authorized) {
+        return <Navigate to="/lockscreen" />
+    } else {
     return (
         <>
+            <Header />
             <div className="shadow-month">
                 <div className="container mx-auto p-4 max-w-4xl overflow-hidden text-lg  flex items-center justify-between">
                     <button disabled={month === 4} onClick={() => setMonth(prev => prev + 1)}><RiArrowLeftSLine size={27} color={month === 4 ? 'rgb(153 165 182)' : 'rgb(105 113 124)'} /></button>
@@ -110,8 +121,10 @@ const SchedulePerMonth = () => {
                     <IoIosInformationCircle size={25} color="rgb(153 165 182)" />
                 </div>
             </div>
+            <Menu />
         </>
     )
+}
 }
 
 export default SchedulePerMonth

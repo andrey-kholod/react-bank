@@ -30,7 +30,7 @@ const TabComponent: FC<Props> = forwardRef(({ children, appointment, index, chan
     }
 
     return (
-        <button ref={ref} className={`${activeTab === index || activeTab === 0 ? 'block' : 'hidden'} bg-zinc-100 rounded-lg px-3 py-1.5 font-medium ${active ? 'bg-zinc-300' : ''}`} onClick={activeHandleClick}>
+        <button ref={ref} className={`${activeTab === index || activeTab === 0 ? 'block' : 'hidden'} bg-zinc-100 rounded-lg px-3 py-1.5 font-medium ${active ? 'bg-zinc-300 animate-tab' : ''}`} onClick={activeHandleClick}>
             {children}
         </button>
     )
