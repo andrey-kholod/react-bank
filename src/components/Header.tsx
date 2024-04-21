@@ -8,7 +8,7 @@ interface Props {
 
 const Header: FC<Props> = ({ name = 'ИП Лопарев Виталий Вла...' }) => {
     return (
-        <header className="bg-zinc-800 w-full">
+        <header className="fixed top-0 bg-zinc-800 w-full">
             <div className="container mx-auto px-4 max-w-4xl text-gray-400 uppercase py-2.5">
                 <div className="flex justify-between items-center gap-2">
                     <div className="text-white text-xs bg-red-500 flex justify-center items-center py-2 px-3 rounded-full cursor-pointer"><span>A</span></div>

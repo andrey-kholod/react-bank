@@ -13,8 +13,8 @@ interface Props {
 const Box: FC<Props> = ({ children, type = 'div', placeholder, index }) => {
     if (type === 'div') {
         return (
-            <motion.div className="bg-zinc-100 rounded-xl px-4 py-4 mx-1.5 cursor-pointer" initial={{ opacity: 0, x: -100 }}
-                animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5 }}>
+            <motion.div className="bg-zinc-100 rounded-xl px-4 py-4 mx-1.5 cursor-pointer" initial={{ opacity: 0, x: -30 }}
+                animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.4 }}>
                 {children}
             </motion.div>
         )

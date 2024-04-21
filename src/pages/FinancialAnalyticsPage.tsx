@@ -25,7 +25,7 @@ const FinancialAnalyticsPage: FC<Props> = ({ authorized }) => {
 
     const animationVariants = {
         hidden: {
-            x: 100,
+            x: 30,
             opacity: 0,
         },
         visible: (custom: any) => ({

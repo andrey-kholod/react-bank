@@ -19,7 +19,7 @@ const SchedulePerMonth: FC<Props> = ({authorized}) => {
 
     const animationVariants = {
         hidden: {
-            x: 100,
+            x: 10,
             opacity: 0,
         },
         visible: (custom: any) => ({
@@ -93,7 +93,7 @@ const SchedulePerMonth: FC<Props> = ({authorized}) => {
     return (
         <>
             <Header />
-            <div className="shadow-month">
+            <div className="shadow-month mt-14">
                 <div className="container mx-auto p-4 max-w-4xl overflow-hidden text-lg  flex items-center justify-between">
                     <button disabled={month === 4} onClick={() => setMonth(prev => prev + 1)}><RiArrowLeftSLine size={27} color={month === 4 ? 'rgb(153 165 182)' : 'rgb(105 113 124)'} /></button>
                     <h3>{periodsMonths[month]} {month > 4 ? '2023' : '2024'}</h3>

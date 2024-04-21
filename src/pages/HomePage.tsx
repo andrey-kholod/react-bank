@@ -24,9 +24,11 @@ const HomePage:FC<Props> = ({authorized}) => {
     const allMoney = Math.abs(spent) + earned
     const balance = earned - Math.abs(spent)
 
+
+    
     const animationVariants = {
         hidden: {
-            x: 100,
+            x: 30,
             opacity: 0,
         },
         visible: (custom: any) => ({
@@ -36,14 +38,13 @@ const HomePage:FC<Props> = ({authorized}) => {
         })
     }
 
-
     if (!authorized) {
         return <Navigate to="/lockscreen" />
     } else {
     return (
         <>
             <Header />
-            <div className="bg-zinc-800 pt-8 pb-9">
+            <div className="bg-zinc-800 pt-8 pb-9 mt-12">
                 <div className="container mx-auto px-4 max-w-4xl">
                     <div className="flex items-start justify-between">
                         <div className="flex gap-4 items-start">
@@ -52,7 +53,7 @@ const HomePage:FC<Props> = ({authorized}) => {
                             </motion.div>
                             <div className="flex flex-col text-white">
                                 {/* <h3 className="font-medium mb-1.5 text-lg">15 375,19 ₽</h3> */}
-                                <motion.h3 initial={{ opacity: 0, x: -100 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.3 }} className="font-medium mb-1.5 text-lg">{Number(balance.toString().split('.')[0]).toLocaleString('ru-RU')}<span className="font-light">,{balance.toFixed(2).toString().split('.')[1]}₽</span></motion.h3>
+                                <h3 className="font-medium mb-1.5 text-lg">{Number(balance.toString().split('.')[0]).toLocaleString('ru-RU')}<span className="font-light">,{balance.toFixed(2).toString().split('.')[1]}₽</span></h3>
                                 <p className="mb-0.5">Расчётный <span className="text-sm">&#x2022;&#x2022;</span>0076</p>
                             </div>
                         </div>
@@ -86,7 +87,7 @@ const HomePage:FC<Props> = ({authorized}) => {
                     <Box type="input" placeholder="Контрагент или назначение" index={activeTab}>
                     </Box>
                     <div className="btn-box mx-1.5 mt-5 mb-9 flex items-center gap-2">
-                        <MTabComponent custom={1} variants={animationVariants} initial="hidden" animate="visible" appointment="none" index={1} changeTheIndex={setActiveTab} activeTab={activeTab}>
+                    <MTabComponent custom={1} variants={animationVariants} initial="hidden" animate="visible" appointment="none" index={1} changeTheIndex={setActiveTab} activeTab={activeTab}>
                             <LuSettings2 size={20} />
                         </MTabComponent>
                         <MTabComponent custom={2} variants={animationVariants} initial="hidden" animate="visible" appointment="incoming" index={2} changeTheIndex={setActiveTab} activeTab={activeTab}>Входящие</MTabComponent>

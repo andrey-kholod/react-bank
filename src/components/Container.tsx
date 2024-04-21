@@ -6,7 +6,7 @@ interface Props {
 
 const Container: FC<Props> = ({ children }) => {
     return (
-        <div className="container mx-auto px-4 max-w-4xl pb-24">
+        <div className="container mx-auto px-4 max-w-4xl pb-24 mt-12">
             {children}
         </div>
     )
