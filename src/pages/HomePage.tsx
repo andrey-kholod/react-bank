@@ -5,17 +5,37 @@ import { Link, Navigate } from "react-router-dom"
 import Box from "../components/Box"
 import { currentSpendings } from "../ulits/utils"
 import { MdOutlineKeyboardArrowRight } from "react-icons/md"
-import { FC } from "react"
+import { FC, useState } from "react"
 import { motion } from "framer-motion"
+import { MTabComponent } from "../components/TabComponent"
+import { LuSettings2 } from "react-icons/lu"
+import { getMainContext } from "../context/expensesContext"
+import ExpensesPerDay from "../components/ExpensesPerDay"
 
 interface Props {
     authorized: boolean
 }
 
 const HomePage:FC<Props> = ({authorized}) => {
+    const [mainContextExpenses] = getMainContext()
     const [earned, spent] = currentSpendings()
+    const [activeTab, setActiveTab] = useState(0)
+
     const allMoney = Math.abs(spent) + earned
     const balance = earned - Math.abs(spent)
+
+    const animationVariants = {
+        hidden: {
+            x: 100,
+            opacity: 0,
+        },
+        visible: (custom: any) => ({
+            x: 0,
+            opacity: 1,
+            transition: { delay: custom * 0.15 }
+        })
+    }
+
 
     if (!authorized) {
         return <Navigate to="/lockscreen" />
@@ -23,21 +43,20 @@ const HomePage:FC<Props> = ({authorized}) => {
     return (
         <>
             <Header />
-            <div className="bg-zinc-800 pt-10 pb-10">
+            <div className="bg-zinc-800 pt-8 pb-9">
                 <div className="container mx-auto px-4 max-w-4xl">
                     <div className="flex items-start justify-between">
                         <div className="flex gap-4 items-start">
-                            <motion.div className="ruble" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }}>
+                            <motion.div className="ruble" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.3 }}>
                                 <BiRuble color="rgb(39 39 42)" className='p-0.5 w-6 h-6 rounded-sm mb-0.5 bg-gray-500' size={1} />
                             </motion.div>
                             <div className="flex flex-col text-white">
                                 {/* <h3 className="font-medium mb-1.5 text-lg">15 375,19 ₽</h3> */}
                                 <motion.h3 initial={{ opacity: 0, x: -100 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.3 }} className="font-medium mb-1.5 text-lg">{Number(balance.toString().split('.')[0]).toLocaleString('ru-RU')}<span className="font-light">,{balance.toFixed(2).toString().split('.')[1]}₽</span></motion.h3>
                                 <p className="mb-0.5">Расчётный <span className="text-sm">&#x2022;&#x2022;</span>0076</p>
-                                <p className="text-gray-400 font-light">1 000, 00 ₽</p>
                             </div>
                         </div>
-                        <motion.div initial={{ opacity: 0, x: 100 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.3 }} className="bg-card card"></motion.div>
+                        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.3 }} className="bg-card card"></motion.div>
                     </div>
                 </div>
             </div>
@@ -63,6 +82,22 @@ const HomePage:FC<Props> = ({authorized}) => {
                     </div>
                 </Link>
             </Box>
+            <h2 className="text-gray-800 font-bold text-xl mt-14 mb-6">Исполненные платежи</h2>
+                    <Box type="input" placeholder="Контрагент или назначение" index={activeTab}>
+                    </Box>
+                    <div className="btn-box mx-1.5 mt-5 mb-9 flex items-center gap-2">
+                        <MTabComponent custom={1} variants={animationVariants} initial="hidden" animate="visible" appointment="none" index={1} changeTheIndex={setActiveTab} activeTab={activeTab}>
+                            <LuSettings2 size={20} />
+                        </MTabComponent>
+                        <MTabComponent custom={2} variants={animationVariants} initial="hidden" animate="visible" appointment="incoming" index={2} changeTheIndex={setActiveTab} activeTab={activeTab}>Входящие</MTabComponent>
+                        <MTabComponent custom={3} variants={animationVariants} initial="hidden" animate="visible" appointment="outgoing" index={3} changeTheIndex={setActiveTab} activeTab={activeTab}>Исходящие</MTabComponent>
+                    </div>
+
+                    <div className="expenses-block mx-1.5">
+                        {Object.keys(mainContextExpenses).map((e, i) => (
+                            <ExpensesPerDay date={e} expenses={mainContextExpenses[e]} key={i} />
+                        ))}
+                    </div>
                 </div>
             <Menu />
         </>

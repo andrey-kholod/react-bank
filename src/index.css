@@ -124,3 +124,20 @@ body {
   background: rgb(108, 108, 108);
   background: linear-gradient(0deg, rgba(108, 108, 108, 1) 0%, rgba(185, 185, 185, 1) 60%, rgba(255, 255, 255, 1) 100%);
 }
+
+.bell-animation {
+  animation: .3s bell;
+  animation-iteration-count: 2;
+}
+
+@keyframes bell {
+  0% {
+    rotate: 0deg;
+  }
+  50% {
+    rotate: 13deg;
+  }
+  0% {
+    rotate: 0deg;
+  }
+}

@@ -6,7 +6,7 @@ interface Props {
     name?: string;
 }
 
-const Header: FC<Props> = ({ name = 'ИП Лопарев Виталий' }) => {
+const Header: FC<Props> = ({ name = 'ИП Лопарев Виталий Вла...' }) => {
     return (
         <header className="bg-zinc-800 w-full">
             <div className="container mx-auto px-4 max-w-4xl text-gray-400 uppercase py-2.5">
@@ -16,7 +16,9 @@ const Header: FC<Props> = ({ name = 'ИП Лопарев Виталий' }) => {
                         <span className="truncate font-light">{name}</span>
                         <MdOutlineKeyboardArrowDown size={16} color="fff" />
                     </div>
-                    <FaRegBell size={19} cursor='pointer' />
+                    <span className="bell-animation">
+                        <FaRegBell size={19} cursor='pointer' />
+                    </span>
                 </div>
             </div>
         </header>
